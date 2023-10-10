@@ -7,7 +7,7 @@ Centralized logging package for maintaining consistent logging across projects.
 You can install this package via [Composer](https://getcomposer.org/):
 
 ```bash
-composer require ankit-twidpay/twid-logger
+composer require twidpay/twid-logger
 ```
 
 ## Configuration
