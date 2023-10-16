@@ -70,7 +70,7 @@ class Logger
 
     private function getConfig()
     {
-        if (function_exists('app') && app() instanceof \Illuminate\Contracts\Foundation\Application) {
+        if (function_exists('app') && app()) {
             $this->config = include(dirname(__DIR__, 4) . '/config/logging.php');
         } else {
             $this->config = include(__DIR__ . '/config/logging.php');

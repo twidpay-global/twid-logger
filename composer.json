@@ -1,6 +1,6 @@
 {
     "name": "twidpay/twid-logger",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Centralized logging package for maintaining consistent logging across projects.",
     "type": "library",
     "license": "MIT",
