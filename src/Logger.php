@@ -3,7 +3,7 @@
 namespace twid\logger;
 
 use Monolog\Formatter\JsonFormatter;
-use Monolog\Handler\RotatingFileHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger as MonologLogger;
 
 /**
@@ -62,7 +62,7 @@ class Logger
         $logPath = $channelConfig['path'];
         $logLevel = $channelConfig['level'];
 
-        $handler = new RotatingFileHandler($logPath, 0, $logLevel);
+        $handler = new StreamHandler($logPath, 0, $logLevel);
         $handler->setFormatter(new JsonFormatter());
 
         $this->log->pushHandler($handler);

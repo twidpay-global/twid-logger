@@ -21,8 +21,7 @@ class LoggerTest extends TestCase
         $data = ['test' => 'verified'];
         $this->logger->log($message, $data);
 
-        $date = date('Y-m-d', strtotime('now'));
-        $logContent = $this->getTheLastLineOfTheFile('storage/logs/info-' . $date . '.log');
+        $logContent = $this->getTheLastLineOfTheFile('storage/logs/info.log');
         $this->assertEquals($message, $logContent['message']);
         $this->assertEquals($data['test'], $logContent['context']['test']);
     }
@@ -70,8 +69,7 @@ class LoggerTest extends TestCase
 
         $this->logger->log('Test message with metadata');
 
-        $date = date('Y-m-d', strtotime('now'));
-        $logContent = $this->getTheLastLineOfTheFile('storage/logs/info-' . $date . '.log');
+        $logContent = $this->getTheLastLineOfTheFile('storage/logs/info.log');
 
         $this->assertEquals($_REQUEST['ip_address'], $logContent['context']['metadata']['ip_address']);
         $this->assertEquals($_REQUEST['user_id'], $logContent['context']['metadata']['user_id']);
