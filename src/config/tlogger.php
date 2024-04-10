@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Level;
 use Monolog\Logger as MonologLogger;
 
 return [
@@ -7,47 +8,47 @@ return [
         'default' => [
             'driver' => 'daily',
             'path' => 'storage/logs/info.log',
-            'level' => MonologLogger::INFO,
+            'level' => Level::Info,
          ],
         'inbound' => [
             'driver' => 'daily',
             'path' => 'storage/logs/inbound.log',
-            'level' => MonologLogger::INFO,
+            'level' => Level::Info,
         ],
         'outbound' => [
             'driver' => 'daily',
             'path' => 'storage/logs/outbound.log',
-            'level' => MonologLogger::INFO,
+            'level' => Level::Info,
         ],
         'info' => [
             'driver' => 'daily',
             'path' => 'storage/logs/info.log',
-            'level' => MonologLogger::INFO,
+            'level' => Level::Info,
         ],
         'critical' => [
             'driver' => 'daily',
             'path' => 'storage/logs/critical.log',
-            'level' => MonologLogger::CRITICAL,
+            'level' => Level::Critical,
         ],
         'warning' => [
             'driver' => 'daily',
             'path' => 'storage/logs/warning.log',
-            'level' => MonologLogger::WARNING,
+            'level' => Level::Warning,
         ],
         'debug' => [
             'driver' => 'daily',
             'path' => 'storage/logs/debug.log',
-            'level' => MonologLogger::DEBUG,
+            'level' => Level::Debug,
         ],
         'alert' => [
             'driver' => 'daily',
             'path' => 'storage/logs/alert.log',
-            'level' => MonologLogger::ALERT,
+            'level' => Level::Alert,
         ],
         'error' => [
             'driver' => 'daily',
             'path' => 'storage/logs/error.log',
-            'level' => MonologLogger::ERROR,
+            'level' => Level::Error,
         ],
     ],
     'metadata' => ['user_id', 'ip_address'],
