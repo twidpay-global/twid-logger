@@ -62,7 +62,7 @@ class Logger
         $logPath = $channelConfig['path'];
         $logLevel = $channelConfig['level'];
 
-        $handler = new StreamHandler($logPath, 0, $logLevel);
+        $handler = new StreamHandler($logPath, $logLevel, 0);
         $handler->setFormatter(new JsonFormatter());
 
         $this->log->pushHandler($handler);
