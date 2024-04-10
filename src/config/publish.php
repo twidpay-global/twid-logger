@@ -1,45 +1,59 @@
 <?php
 
+use Monolog\Level;
 use Monolog\Logger as MonologLogger;
 
 return [
     'channels' => [
         'default' => [
             'driver' => 'daily',
-            'path' => storage_path() . '/logs/info.log',
-            'level' => MonologLogger::INFO,
+            'path' => 'storage/logs/info.log',
+            'level' => Level::Info,
         ],
         'inbound' => [
             'driver' => 'daily',
-            'path' => storage_path() . '/logs/inbound.log',
-            'level' => MonologLogger::INFO,
+            'path' => 'storage/logs/inbound.log',
+            'level' => Level::Info,
         ],
         'outbound' => [
             'driver' => 'daily',
-            'path' => storage_path() . '/logs/outbound.log',
-            'level' => MonologLogger::INFO,
+            'path' => 'storage/logs/outbound.log',
+            'level' => Level::Info,
         ],
         'info' => [
             'driver' => 'daily',
-            'path' => storage_path() . '/logs/info.log',
-            'level' => MonologLogger::INFO,
+            'path' => 'storage/logs/info.log',
+            'level' => Level::Info,
+        ],
+        'critical' => [
+            'driver' => 'daily',
+            'path' => 'storage/logs/critical.log',
+            'level' => Level::Critical,
+        ],
+        'warning' => [
+            'driver' => 'daily',
+            'path' => 'storage/logs/warning.log',
+            'level' => Level::Warning,
         ],
         'debug' => [
             'driver' => 'daily',
-            'path' => storage_path() . '/logs/debug.log',
-            'level' => MonologLogger::DEBUG,
+            'path' => 'storage/logs/debug.log',
+            'level' => Level::Debug,
         ],
         'alert' => [
             'driver' => 'daily',
-            'path' => storage_path() . '/logs/alert.log',
-            'level' => MonologLogger::ALERT,
+            'path' => 'storage/logs/alert.log',
+            'level' => Level::Alert,
         ],
         'error' => [
             'driver' => 'daily',
-            'path' => storage_path() . '/logs/error.log',
-            'level' => MonologLogger::ERROR,
+            'path' => 'storage/logs/error.log',
+            'level' => Level::Error,
         ],
     ],
-    'metadata' => [],
-    'mask' => []
+    'metadata' => ['user_id', 'ip_address'],
+    'mask' => [
+        'mobile_number',
+        'password'
+    ]
 ];
