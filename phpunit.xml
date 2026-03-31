@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <!-- phpunit.xml -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php" verbose="true">
-  <coverage processUncoveredFiles="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.0/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php">
+  <source>
     <include>
       <directory suffix=".php">src</directory>
     </include>
     <exclude>
       <file>src/config/publish.php</file>
     </exclude>
-  </coverage>
+  </source>
   <testsuites>
     <testsuite name="Tests">
-      <directory>tests</directory>
+      <directory>src/test</directory>
     </testsuite>
   </testsuites>
 </phpunit>

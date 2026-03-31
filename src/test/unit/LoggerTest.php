@@ -8,14 +8,38 @@ class LoggerTest extends TestCase
     /** @var Logger */
     private $logger;
 
+    /** @var string */
+    private static string $logDir;
+
+    public static function setUpBeforeClass(): void
+    {
+        // Use a temp directory for all log files during tests
+        self::$logDir = sys_get_temp_dir() . '/twid-logger-tests';
+        if (!is_dir(self::$logDir)) {
+            mkdir(self::$logDir, 0777, true);
+        }
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->logger = new Logger('info');
     }
 
-    /** @test */
-    public function it_logs_a_message()
+    public static function tearDownAfterClass(): void
+    {
+        // Clean up temp log files
+        $files = glob(self::$logDir . '/*.log');
+        if ($files) {
+            foreach ($files as $file) {
+                @unlink($file);
+            }
+        }
+        @rmdir(self::$logDir);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_logs_a_message(): void
     {
         $message = 'Test message';
         $data = ['test' => 'verified'];
@@ -26,8 +50,8 @@ class LoggerTest extends TestCase
         $this->assertEquals($data['test'], $logContent['context']['test']);
     }
 
-    /** @test */
-    public function it_throws_exception_if_channel_configuration_not_found()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_throws_exception_if_channel_configuration_not_found(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Channel configuration for 'nonexistent-channel' not found. Please check logging.php");
@@ -35,36 +59,32 @@ class LoggerTest extends TestCase
         new Logger('nonexistent-channel');
     }
 
-    public function testItMasksSensitiveFields()
+    public function testItMasksSensitiveFields(): void
     {
         $logger = new Logger();
         $method = new \ReflectionMethod($logger, 'maskFields');
-        $method->setAccessible(true);
 
         $result = $method->invoke($logger, ['password' => 'secret']);
 
         $this->assertEquals(['password' => '********'], $result);
     }
 
-    /** @test */
-    public function it_retrieves_metadata_from_request()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_retrieves_metadata_from_request(): void
     {
-        // Mocking $_REQUEST for testing
         $_REQUEST = ['user_id' => 123, 'ip_address' => '127.0.0.1'];
 
         $logger = new Logger();
         $method = new \ReflectionMethod($logger, 'metadata');
-        $method->setAccessible(true);
 
-        $metadata = $method->invoke($logger);    
+        $metadata = $method->invoke($logger);
 
         $this->assertEquals(['user_id' => 123, 'ip_address' => '127.0.0.1'], $metadata);
     }
 
-    /** @test */
-    public function it_logs_with_metadata()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_logs_with_metadata(): void
     {
-        // Mocking $_REQUEST for testing
         $_REQUEST = ['user_id' => 123, 'ip_address' => '127.0.0.1'];
 
         $this->logger->log('Test message with metadata');
@@ -75,24 +95,19 @@ class LoggerTest extends TestCase
         $this->assertEquals($_REQUEST['user_id'], $logContent['context']['metadata']['user_id']);
     }
 
-    public function getTheLastLineOfTheFile($path)
+    public function getTheLastLineOfTheFile(string $path): array
     {
         $file = new \SplFileObject($path);
-
         $file->seek(PHP_INT_MAX);
-        $lastLineNumber = $file->key() ? ($file->key() - 1)  : 0;
-
-        // Seek to the beginning of the last line
+        $lastLineNumber = $file->key() ? ($file->key() - 1) : 0;
         $file->seek($lastLineNumber);
         $lastLine = $file->current();
 
         return json_decode($lastLine, true);
     }
 
-
     protected function tearDown(): void
     {
-        // Add any cleanup code here
         parent::tearDown();
     }
 }
